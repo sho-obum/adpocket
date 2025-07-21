@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import FormatAd from "./components/FormatAd";
 import HowItWorks from "./components/HowItWorks";
+import WhyChooseUs from "./components/WhyChooseUs";
 
 const Button = ({ children, variant = "primary", className = "" }) => {
   const base =
@@ -43,7 +44,7 @@ const Navbar = () => {
             {/* Logo */}
             <div className="flex-shrink-0">
               <span className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-transparent">
-                adpocket.ai
+                Adpocket.ai
               </span>
             </div>
 
@@ -64,7 +65,7 @@ const Navbar = () => {
             </div>
 
             {/* Mobile Hamburger */}
-            <div className="md:hidden mr-5">
+            <div className="md:hidden">
               <button
                 onClick={toggleMenu}
                 className="relative w-8 h-8 focus:outline-none"
@@ -162,7 +163,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-gray-900 via-black to-gray-800 text-white min-h-screen">
+    <div className="bg-gradient-to-b from-gray-900 via-black to-gray-800 text-white min-h-screen overflow-x-hidden">
       <Navbar />
 
       {/* HERO */}
@@ -178,7 +179,7 @@ export default function App() {
         >
           Power Your Apps with{" "}
           <span className="bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-transparent">
-            adpocket.ai
+            Adpocket.ai
           </span>
         </motion.h1>
         <motion.p
@@ -205,61 +206,16 @@ export default function App() {
       </section>
 
       {/* WHY CHOOSE US */}
-      <section id="features" className="py-28 px-4 sm:px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
-          Why Developers Choose adpocket.ai
-        </h2>
-        <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[
-            {
-              title: "One SDK, Global Demand",
-              text: "Integrate once and access 30+ premium ad networks and demand partners across the world.",
-            },
-            {
-              title: "AI-Powered Mediation",
-              text: "Our adaptive waterfall and in‑app bidding engine ensure you always get the highest eCPM.",
-            },
-            {
-              title: "High eCPM Optimization",
-              text: "Real‑time insights help you tweak your strategy and maximize revenue with minimal effort.",
-            },
-            {
-              title: "Privacy & Compliance",
-              text: "Fully GDPR and CCPA compliant. User trust and data security are at our core.",
-            },
-            {
-              title: "Real-Time Analytics",
-              text: "Track impressions, fill rates, and revenue instantly with a beautiful, interactive dashboard.",
-            },
-            {
-              title: "Easy Integration",
-              text: "Start monetizing in minutes with a lightweight, developer‑friendly SDK.",
-            },
-          ].map((f, i) => (
-            <motion.div
-              key={i}
-              custom={i}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              className="bg-gray-800/50 backdrop-blur border border-gray-700 rounded-3xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-1 hover:bg-gray-800/70 transition-all duration-300"
-            >
-              <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-teal-400 rounded-full mb-6 shadow-lg"></div>
-              <h3 className="text-2xl font-semibold mb-3 text-white">
-                {f.title}
-              </h3>
-              <p className="text-gray-400">{f.text}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+
+      <WhyChooseUs/>
 
       {/* HOW IT WORKS */}
 
       <HowItWorks />
+
       {/* SUPPORTED FORMATS - Custom Horizontal Layout */}
       <FormatAd />
+
       {/* DASHBOARD PREVIEW */}
       <section className="py-28 bg-gradient-to-r from-gray-800/30 to-gray-700/30 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
