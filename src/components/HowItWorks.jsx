@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const HowItWorks = () => {
@@ -24,8 +24,9 @@ const HowItWorks = () => {
   ];
 
   const [currentStep, setCurrentStep] = useState(0);
+  const sectionRef = useRef(null);
 
-  // Desktop fade-up animation variants
+  // Desktop fade-up animation
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
     show: (i = 1) => ({
@@ -35,61 +36,63 @@ const HowItWorks = () => {
     }),
   };
 
-  // Mobile scroll handler
+  // CORRECTED Mobile scroll handler
   useEffect(() => {
     const handleScroll = () => {
-      const section = document.getElementById('how-it-works-mobile');
-      if (!section) return;
+      if (!sectionRef.current) return;
       
+      const section = sectionRef.current;
       const rect = section.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
+      const windowHeight = window.innerHeight;
       const sectionHeight = section.offsetHeight;
       
-      // Calculate scroll progress
-      const scrollProgress = Math.max(0, Math.min(1, 
-        (viewportHeight - rect.top) / (sectionHeight + viewportHeight)
-      ));
-      
-      // Map progress to step index
-      let stepIndex;
-      if (scrollProgress < 0.33) {
-        stepIndex = 0;
-      } else if (scrollProgress < 0.66) {
-        stepIndex = 1;
-      } else {
-        stepIndex = 2;
-      }
-      
-      const clampedStep = Math.max(0, Math.min(steps.length - 1, stepIndex));
-      
-      if (clampedStep !== currentStep) {
-        setCurrentStep(clampedStep);
+      // Section is in viewport
+      if (rect.top <= 0 && rect.bottom >= windowHeight) {
+        // Calculate how far we've scrolled into the section
+        const scrolledIntoSection = Math.abs(rect.top);
+        const maxScroll = sectionHeight - windowHeight;
+        
+        // Progress from 0 to 1
+        const progress = Math.min(scrolledIntoSection / maxScroll, 1);
+        
+        // Determine step based on progress with proper thresholds
+        let newStep;
+        if (progress < 0.25) {
+          newStep = 0;
+        } else if (progress < 0.75) {
+          newStep = 1;
+        } else {
+          newStep = 2;
+        }
+        
+        if (newStep !== currentStep) {
+          setCurrentStep(newStep);
+        }
       }
     };
 
-    // Throttled scroll handler
-    let ticking = false;
+    // Optimized scroll listener
+    let rafId;
     const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        handleScroll();
+        rafId = null;
+      });
     };
 
     window.addEventListener('scroll', throttledScroll, { passive: true });
+    handleScroll(); // Initial call
     
-    // Initial call to set correct step
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', throttledScroll);
-  }, [currentStep, steps.length]);
+    return () => {
+      window.removeEventListener('scroll', throttledScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [currentStep]);
 
   return (
     <>
-      {/* Desktop Version */}
+      {/* Desktop Version - Unchanged */}
       <section 
         id="how-it-works" 
         className="hidden md:block py-28 bg-gradient-to-r from-gray-800/50 to-gray-700/50 px-4 sm:px-6"
@@ -122,113 +125,112 @@ const HowItWorks = () => {
         </div>
       </section>
 
-      {/* Mobile Version */}
-      <section 
-        id="how-it-works-mobile" 
-        className="block md:hidden"
-        style={{ height: '100vh' }}
+      {/* FIXED Mobile Version */}
+      <div 
+        ref={sectionRef}
+        className="block md:hidden bg-gradient-to-r from-gray-800/50 to-gray-700/50"
+        style={{ height: '200vh' }} // Reduced but sufficient height
       >
-        <div className="relative bg-gradient-to-r from-gray-800/50 to-gray-700/50 h-full">
-          {/* Sticky Content Area */}
-          <div className="sticky top-0 h-screen flex items-center justify-center px-4">
-            <div className="max-w-lg mx-auto text-center">
-              
-              {/* Section Title */}
-              <motion.h2 
-                className="text-4xl font-bold mb-8 text-white"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                How It Works
-              </motion.h2>
-              
-              {/* Progress Bar */}
-              <div className="w-full bg-gray-700 rounded-full h-2 mb-8">
-                <motion.div
-                  className="bg-gradient-to-r from-indigo-500 to-teal-500 h-2 rounded-full"
-                  initial={{ width: "0%" }}
-                  animate={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-                  transition={{ duration: 0.5 }}
-                />
-              </div>
-
-              {/* Step Content */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentStep}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -50 }}
-                  transition={{ duration: 0.5 }}
-                  className="bg-gray-800/50 backdrop-blur border border-gray-700 rounded-3xl p-8 shadow-lg"
-                >
-                  {/* Step Number */}
-                  <motion.div
-                    className="text-transparent bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-6xl font-bold mb-4"
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    {steps[currentStep].step}
-                  </motion.div>
-                  
-                  {/* Step Title */}
-                  <h3 className="text-2xl font-semibold mb-4 text-white">
-                    {steps[currentStep].title}
-                  </h3>
-                  
-                  {/* Step Description */}
-                  <p className="text-lg text-gray-300 mb-4">
-                    {steps[currentStep].text}
-                  </p>
-                  
-                  {/* Additional Details */}
-                  <p className="text-sm text-gray-400">
-                    {steps[currentStep].description}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Dot Indicators */}
-              <div className="flex justify-center mt-8 space-x-2">
-                {steps.map((_, i) => (
-                  <div
-                    key={i}
-                    className={`w-3 h-3 rounded-full transition-all duration-500 ${
-                      i === currentStep 
-                        ? 'bg-gradient-to-r from-indigo-500 to-teal-500 scale-125' 
-                        : 'bg-gray-600'
-                    }`}
-                  />
-                ))}
-              </div>
-              
-              {/* Scroll Hint */}
-              {currentStep === 0 && (
-                <motion.div
-                  className="mt-8 text-gray-400 text-sm"
-                  animate={{ opacity: [1, 0.5, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  ↓ Scroll to see next step
-                </motion.div>
-              )}
-
-              {/* Completion Message */}
-              {currentStep === steps.length - 1 && (
-                <motion.div
-                  className="mt-8 text-teal-400 text-sm font-medium"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 0.5 }}
-                >
-                  🎉 Ready to get started!
-                </motion.div>
-              )}
+        {/* Sticky Container */}
+        <div className="sticky top-0 h-screen flex items-center justify-center px-4">
+          <div className="max-w-lg mx-auto text-center">
+            
+            {/* Section Title */}
+            <motion.h2 
+              className="text-4xl font-bold mb-8 text-white"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              How It Works
+            </motion.h2>
+            
+            {/* Progress Bar */}
+            <div className="w-full bg-gray-700 rounded-full h-2 mb-8">
+              <motion.div
+                className="bg-gradient-to-r from-indigo-500 to-teal-500 h-2 rounded-full"
+                animate={{ 
+                  width: `${((currentStep + 1) / steps.length) * 100}%` 
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              />
             </div>
+
+            {/* Step Content */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentStep}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.4 }}
+                className="bg-gray-800/50 backdrop-blur border border-gray-700 rounded-3xl p-8 shadow-lg"
+              >
+                {/* Step Number */}
+                <motion.div
+                  className="text-transparent bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-6xl font-bold mb-4"
+                  animate={{ scale: [0.95, 1.05, 1] }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {steps[currentStep].step}
+                </motion.div>
+                
+                {/* Step Title */}
+                <h3 className="text-2xl font-semibold mb-4 text-white">
+                  {steps[currentStep].title}
+                </h3>
+                
+                {/* Step Description */}
+                <p className="text-lg text-gray-300 mb-4">
+                  {steps[currentStep].text}
+                </p>
+                
+                {/* Additional Details */}
+                <p className="text-sm text-gray-400">
+                  {steps[currentStep].description}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Dot Indicators */}
+            <div className="flex justify-center mt-8 space-x-2">
+              {steps.map((_, i) => (
+                <div
+                  key={i}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    i === currentStep 
+                      ? 'bg-gradient-to-r from-indigo-500 to-teal-500 scale-125' 
+                      : 'bg-gray-600'
+                  }`}
+                />
+              ))}
+            </div>
+            
+            {/* Scroll Hint */}
+            {currentStep === 0 && (
+              <motion.div
+                className="mt-6 text-gray-400 text-sm"
+                animate={{ opacity: [1, 0.5, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                ↓ Continue scrolling
+              </motion.div>
+            )}
+
+            {/* Completion */}
+            {currentStep === steps.length - 1 && (
+              <motion.div
+                className="mt-6 text-teal-400 text-sm font-medium"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                ✨ All steps completed!
+              </motion.div>
+            )}
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 };
