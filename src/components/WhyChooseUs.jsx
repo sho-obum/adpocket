@@ -3,41 +3,101 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const FEATURES = [
   {
-    title: "One SDK, Global Demand",
-    text: "Integrate once and access 30+ premium ad networks and demand partners worldwide.",
-    icon: "🌐",
-    tags: ["Global reach", "30+ Networks"],
+    title: "AI-Powered Mediation",
+    // Right side - brief content
+    briefContent: "Unified mediation stack powered by real-time data — automatically delivers the best-paying ads with minimal latency.",
+    // Left side - detailed content  
+    detailedTitle: "Smarter decisions, higher revenue — all in real time.",
+    detailedContent: "Our AI-powered mediation engine intelligently manages ad requests across multiple networks using adaptive waterfall and in-app bidding. It continuously learns from performance data to ensure that every impression is sold at the highest possible eCPM, with zero manual intervention. Say goodbye to static setups and hello to dynamic, automated optimization that boosts your fill rates and maximizes earnings — effortlessly.",
+    icon: "🤖",
+    features: [
+      "Real-time bidding",
+      "Adaptive waterfall",
+      "Dynamic ad prioritization", 
+      "AI-based decisioning",
+      "Contextual optimization",
+      "Smart fill rate control",
+      "Bid-level transparency",
+      "Auto-network balancing"
+    ]
   },
   {
-    title: "AI-Powered Mediation",
-    text: "Adaptive waterfall and in-app bidding ensure you always get the highest eCPM.",
-    icon: "🤖",
-    tags: ["Smart optimization", "Real-time bidding"],
+    title: "One SDK, Global Demand",
+    briefContent: "One simple integration connects you to 30+ premium ad networks and global advertisers — boosting scale, revenue, and performance.",
+    detailedTitle: "Integrate once. Unlock global reach.",
+    detailedContent: "With a single, lightweight SDK integration, gain instant access to 30+ premium ad networks and high-performing global demand sources. Eliminate the hassle of multiple SDKs — streamline your monetization pipeline, reduce integration time, and boost revenue from day one. Whether your app serves a niche region or a global audience, our SDK ensures maximum scalability and consistent performance across formats.",
+    icon: "🌐",
+    features: [
+      "One-time integration",
+      "Instant global access",
+      "30+ ad networks",
+      "Unified demand pipeline",
+      "Global advertiser pool",
+      "Regional targeting support",
+      "Lightweight SDK",
+      "Cross-format compatibility"
+    ]
   },
   {
     title: "High eCPM Optimisation",
-    text: "Real-time insights let you tweak strategy and maximise revenue with minimal effort.",
+    briefContent: "Real-time, AI-driven pricing and delivery logic ensure you earn top dollar on every impression — across formats, geos, and devices.",
+    detailedTitle: "Maximize revenue with every single impression.",
+    detailedContent: "Our advanced optimization engine continuously analyzes performance signals — such as geography, device type, ad format, and user behavior — to serve the highest-paying ads in real time. Using a combination of AI-driven pricing intelligence and performance-based placement, AdPocket ensures your inventory generates the maximum eCPM with minimal manual adjustments. Whether you rely on rewarded video, interstitials, or banners, you get optimized performance, every time.",
     icon: "📈",
-    tags: ["Revenue boost", "Live analytics"],
+    features: [
+      "Dynamic pricing engine",
+      "Geo & device-based targeting",
+      "Format-specific tuning",
+      "Continuous performance learning",
+      "Intelligent fill rate control",
+      "Auto eCPM refresh"
+    ]
   },
   {
     title: "Privacy & Compliance",
-    text: "Fully GDPR / CCPA compliant. User trust and data security are at our core.",
+    briefContent: "100% GDPR, CCPA, and LGPD compliant — with built-in consent flows and secure data practices that protect both users and your business.",
+    detailedTitle: "Built for user trust and global standards.",
+    detailedContent: "AdPocket is fully compliant with major global data privacy regulations including GDPR, CCPA, LGPD, and more. Our SDK is engineered with built-in consent management, user opt-out mechanisms, and secure data handling protocols — ensuring transparency, user safety, and advertiser trust. Whether you operate in Europe, the US, or emerging markets, you're covered with privacy-first architecture that scales responsibly.",
     icon: "🔒",
-    tags: ["GDPR ready", "CCPA compliant"],
+    features: [
+      "GDPR & CCPA compliant",
+      "Secure data handling",
+      "Consent management built-in",
+      "Global privacy support",
+      "User opt-out ready",
+      "Transparent data policies"
+    ]
   },
   {
     title: "Real-Time Analytics",
-    text: "Track impressions, fill rates and revenue instantly with an interactive dashboard.",
+    briefContent: "Stay in control with live dashboards and deep reporting — optimize revenue and performance instantly, backed by real-time data.",
+    detailedTitle: "Make faster, smarter monetization decisions.",
+    detailedContent: "Gain full visibility into your app's ad performance with real-time reporting and granular analytics. Track impressions, clicks, revenue, fill rates, and eCPM across ad networks, formats, geos, and devices — all in one powerful dashboard. With live insights and customizable reporting tools, AdPocket empowers you to optimize campaigns instantly, resolve issues faster, and unlock new monetization opportunities with data-driven confidence.",
     icon: "📊",
-    tags: ["Live dashboard", "Instant insights"],
+    features: [
+      "Live performance metrics",
+      "Granular breakdowns by geo & format",
+      "Unified dashboard",
+      "Customizable reporting",
+      "Instant trend detection",
+      "Smart alert system"
+    ]
   },
   {
     title: "Easy Integration",
-    text: "Start monetising in minutes with a lightweight, developer-friendly SDK.",
+    briefContent: "Integrate in minutes with our lightweight SDK, clear documentation, and end-to-end developer support — zero friction, full speed.",
+    detailedTitle: "Start monetizing in minutes — not weeks.",
+    detailedContent: "AdPocket's SDK is lightweight, developer-friendly, and built for fast deployment. With clean documentation, responsive tech support, and modular architecture, you can go live with minimal effort and zero disruption to your app flow. Whether you're integrating rewarded video, interstitials, or banners, everything is streamlined for smooth onboarding and faster revenue generation.",
     icon: "⚡",
-    tags: ["Quick setup", "Lightweight"],
-  },
+    features: [
+      "Lightweight SDK",
+      "Plug & play setup",
+      "Developer-friendly docs",
+      "Quick testing & QA support",
+      "Cross-platform compatibility",
+      "Fast go-live process"
+    ]
+  }
 ];
 
 export default function WhyChooseUs() {
@@ -45,7 +105,7 @@ export default function WhyChooseUs() {
   const next = () => index < FEATURES.length - 1 && setIndex(index + 1);
   const prev = () => index > 0 && setIndex(index - 1);
 
-  /* ---------- Desktop Card ---------- */
+  /* ---------- Desktop Card (Left Side - Detailed Content) ---------- */
   const CardDesktop = ({ feature }) => (
     <motion.div
       key={feature.title}
@@ -54,13 +114,12 @@ export default function WhyChooseUs() {
       exit={{ opacity: 0, y: -30 }}
       transition={{ duration: 0.4 }}
       className="relative rounded-3xl overflow-hidden"
-      style={{ height: "400px" }}
+      style={{ height: "520px" }}
     >
-      {/* static gradient border */}
+      {/* gradient border */}
       <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-teal-500 rounded-3xl opacity-75">
         <div className="absolute inset-[2px] bg-gray-800/90 rounded-3xl"></div>
       </div>
-      {/* hover-animated gradient border */}
       <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-teal-500 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="absolute inset-[2px] bg-gray-800/90 rounded-3xl"></div>
       </div>
@@ -72,25 +131,26 @@ export default function WhyChooseUs() {
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
         {/* icon + title */}
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center gap-4 mb-4">
           <div className="w-16 h-16 flex items-center justify-center flex-shrink-0 rounded-xl bg-gradient-to-br from-indigo-500 to-teal-500 text-3xl shadow-lg">
             {feature.icon}
           </div>
-          <h3 className="text-2xl font-semibold text-white">{feature.title}</h3>
+          <div>
+            <h3 className="text-2xl font-semibold text-white">{feature.title}</h3>
+            <p className="text-indigo-300 text-sm font-medium mt-1">{feature.detailedTitle}</p>
+          </div>
         </div>
 
-        {/* description */}
-        <p className="text-gray-300 flex-1 mb-6 leading-relaxed">{feature.text}</p>
+        {/* detailed description */}
+        <p className="text-gray-300 mb-6 leading-relaxed text-sm">{feature.detailedContent}</p>
 
-        {/* tags */}
-        <div className="flex flex-wrap gap-2">
-          {feature.tags.map((tag, i) => (
-            <span
-              key={i}
-              className="px-3 py-1 bg-gray-700/50 border border-gray-600 rounded-full text-sm text-gray-300"
-            >
-              {tag}
-            </span>
+        {/* features grid */}
+        <div className="grid grid-cols-2 gap-2 mt-auto">
+          {feature.features.map((feat, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-gradient-to-r from-indigo-500 to-teal-500 flex-shrink-0"></div>
+              <span className="text-gray-300 text-xs">{feat}</span>
+            </div>
           ))}
         </div>
       </motion.div>
@@ -127,6 +187,7 @@ export default function WhyChooseUs() {
 
       {/* Desktop split-screen */}
       <div className="hidden lg:grid grid-cols-2 gap-12 max-w-7xl mx-auto">
+        {/* Left side - Detailed content */}
         <div className="relative px-16">
           <AnimatePresence mode="wait">
             <CardDesktop feature={FEATURES[index]} />
@@ -172,10 +233,10 @@ export default function WhyChooseUs() {
           </div>
         </div>
 
-        {/* right: scrollable list */}
+        {/* Right side - Brief content list */}
         <div
           className="space-y-4 pl-4 border-l border-gray-700/60 custom-scrollbar overflow-x-hidden"
-          style={{ height: "400px", overflowY: "auto" }}
+          style={{ height: "520px", overflowY: "auto" }}
         >
           {FEATURES.map((f, i) => (
             <motion.button
@@ -196,15 +257,15 @@ export default function WhyChooseUs() {
                 }`}>
                   {f.title}
                 </span>
-                <p className="text-sm text-gray-400 mt-1">{f.text}</p>
-                
+                {/* Using brief content for right side */}
+                <p className="text-sm text-gray-400 mt-1">{f.briefContent}</p>
               </div>
             </motion.button>
           ))}
         </div>
       </div>
 
-      {/* Mobile carousel */}
+      {/* Mobile carousel - Only brief content */}
       <div className="lg:hidden max-w-md mx-auto relative px-4 overflow-hidden">
         <AnimatePresence>
           {index > 0 && (
@@ -244,33 +305,21 @@ export default function WhyChooseUs() {
           >
             {FEATURES.map((f, i) => (
               <div key={i} className="w-full flex-shrink-0 px-2">
-              <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.4, delay: i * 0.1 }}
-  className="bg-gray-800/60 backdrop-blur border border-gray-700 rounded-3xl p-6 shadow-lg flex flex-col items-center text-center"
->
-  {/* icon */}
-  <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-teal-500 text-3xl shadow-lg">
-    {f.icon}
-  </div>
-  {/* title */}
-  <h3 className="text-xl font-semibold text-white mb-2">{f.title}</h3>
-  {/* text */}
-  <p className="text-gray-300 mb-4">{f.text}</p>
-  {/* tags - hidden on mobile */}
-  <div className="hidden flex-wrap gap-2">
-    {f.tags.map((tag, j) => (
-      <span
-        key={j}
-        className="px-3 py-1 bg-gray-700/50 border border-gray-600 rounded-full text-xs text-gray-300"
-      >
-        {tag}
-      </span>
-    ))}
-  </div>
-</motion.div>
-
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                  className="bg-gray-800/60 backdrop-blur border border-gray-700 rounded-3xl p-6 shadow-lg flex flex-col items-center text-center"
+                >
+                  {/* icon */}
+                  <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-teal-500 text-3xl shadow-lg">
+                    {f.icon}
+                  </div>
+                  {/* title */}
+                  <h3 className="text-xl font-semibold text-white mb-3">{f.title}</h3>
+                  {/* Only brief content on mobile */}
+                  <p className="text-gray-300 text-sm leading-relaxed">{f.briefContent}</p>
+                </motion.div>
               </div>
             ))}
           </motion.div>
