@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import FormatAd from "./components/FormatAd";
+import HowItWorks from "./components/HowItWorks";
 
 const Button = ({ children, variant = "primary", className = "" }) => {
-  const base = "rounded-xl px-6 py-3 font-medium transition transform hover:scale-105";
+  const base =
+    "rounded-xl px-6 py-3 font-medium transition transform hover:scale-105";
   const variants = {
-    primary: "bg-gradient-to-r from-indigo-600 to-teal-500 text-white shadow-lg hover:shadow-xl",
-    outline: "border border-gray-600 text-gray-300 hover:bg-gray-800 hover:border-gray-500",
+    primary:
+      "bg-gradient-to-r from-indigo-600 to-teal-500 text-white shadow-lg hover:shadow-xl",
+    outline:
+      "border border-gray-600 text-gray-300 hover:bg-gray-800 hover:border-gray-500",
     white: "bg-white text-indigo-600 hover:bg-gray-100 shadow-lg",
     dark: "bg-gray-800 text-white border border-gray-700 hover:bg-gray-700",
   };
-  return <button className={`${base} ${variants[variant]} ${className}`}>{children}</button>;
+  return (
+    <button className={`${base} ${variants[variant]} ${className}`}>
+      {children}
+    </button>
+  );
 };
 
 const Navbar = () => {
@@ -49,7 +58,9 @@ const Navbar = () => {
                   {item.name}
                 </a>
               ))}
-              <Button variant="primary" className="ml-4">Get Started</Button>
+              <Button variant="primary" className="ml-4">
+                Get Started
+              </Button>
             </div>
 
             {/* Mobile Hamburger */}
@@ -61,7 +72,9 @@ const Navbar = () => {
               >
                 <div className="absolute inset-0 flex flex-col justify-center space-y-1">
                   <motion.div
-                    animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+                    animate={
+                      isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }
+                    }
                     className="w-6 h-0.5 bg-white origin-center transition-all duration-300"
                   />
                   <motion.div
@@ -69,7 +82,9 @@ const Navbar = () => {
                     className="w-6 h-0.5 bg-white transition-all duration-300"
                   />
                   <motion.div
-                    animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+                    animate={
+                      isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }
+                    }
                     className="w-6 h-0.5 bg-white origin-center transition-all duration-300"
                   />
                 </div>
@@ -108,7 +123,9 @@ const Navbar = () => {
                   transition={{ delay: menuItems.length * 0.1 }}
                   className="pt-4"
                 >
-                  <Button variant="primary" className="w-full">Get Started</Button>
+                  <Button variant="primary" className="w-full">
+                    Get Started
+                  </Button>
                 </motion.div>
               </div>
             </motion.div>
@@ -149,7 +166,10 @@ export default function App() {
       <Navbar />
 
       {/* HERO */}
-      <section id="home" className="relative overflow-hidden py-32 pt-48 text-center px-4 sm:px-6">
+      <section
+        id="home"
+        className="relative overflow-hidden py-32 pt-48 text-center px-4 sm:px-6"
+      >
         <motion.h1
           variants={fadeUp}
           initial="hidden"
@@ -168,7 +188,9 @@ export default function App() {
           animate="show"
           className="mt-6 text-lg sm:text-xl max-w-3xl mx-auto text-gray-300 px-4"
         >
-          A next-generation monetization SDK that connects your app to global ad demand, intelligent mediation, and real‑time analytics—built for scale, speed, and revenue growth.
+          A next-generation monetization SDK that connects your app to global ad
+          demand, intelligent mediation, and real‑time analytics—built for
+          scale, speed, and revenue growth.
         </motion.p>
         <motion.div
           variants={fadeUp}
@@ -189,12 +211,30 @@ export default function App() {
         </h2>
         <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            { title: "One SDK, Global Demand", text: "Integrate once and access 30+ premium ad networks and demand partners across the world." },
-            { title: "AI-Powered Mediation", text: "Our adaptive waterfall and in‑app bidding engine ensure you always get the highest eCPM." },
-            { title: "High eCPM Optimization", text: "Real‑time insights help you tweak your strategy and maximize revenue with minimal effort." },
-            { title: "Privacy & Compliance", text: "Fully GDPR and CCPA compliant. User trust and data security are at our core." },
-            { title: "Real-Time Analytics", text: "Track impressions, fill rates, and revenue instantly with a beautiful, interactive dashboard." },
-            { title: "Easy Integration", text: "Start monetizing in minutes with a lightweight, developer‑friendly SDK." },
+            {
+              title: "One SDK, Global Demand",
+              text: "Integrate once and access 30+ premium ad networks and demand partners across the world.",
+            },
+            {
+              title: "AI-Powered Mediation",
+              text: "Our adaptive waterfall and in‑app bidding engine ensure you always get the highest eCPM.",
+            },
+            {
+              title: "High eCPM Optimization",
+              text: "Real‑time insights help you tweak your strategy and maximize revenue with minimal effort.",
+            },
+            {
+              title: "Privacy & Compliance",
+              text: "Fully GDPR and CCPA compliant. User trust and data security are at our core.",
+            },
+            {
+              title: "Real-Time Analytics",
+              text: "Track impressions, fill rates, and revenue instantly with a beautiful, interactive dashboard.",
+            },
+            {
+              title: "Easy Integration",
+              text: "Start monetizing in minutes with a lightweight, developer‑friendly SDK.",
+            },
           ].map((f, i) => (
             <motion.div
               key={i}
@@ -206,7 +246,9 @@ export default function App() {
               className="bg-gray-800/50 backdrop-blur border border-gray-700 rounded-3xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-1 hover:bg-gray-800/70 transition-all duration-300"
             >
               <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-teal-400 rounded-full mb-6 shadow-lg"></div>
-              <h3 className="text-2xl font-semibold mb-3 text-white">{f.title}</h3>
+              <h3 className="text-2xl font-semibold mb-3 text-white">
+                {f.title}
+              </h3>
               <p className="text-gray-400">{f.text}</p>
             </motion.div>
           ))}
@@ -214,58 +256,10 @@ export default function App() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section id="how-it-works" className="py-28 bg-gradient-to-r from-gray-800/50 to-gray-700/50 px-4 sm:px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">How It Works</h2>
-        <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-12 text-center">
-          {[
-            { step: "1", text: "Install our SDK with just a few lines of code. No heavy dependencies." },
-            { step: "2", text: "Connect your preferred ad networks or use our one-click mediation setup." },
-            { step: "3", text: "Launch and let our AI optimize your fill rates and earnings in real time." },
-          ].map((s, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.2 }}
-              className="bg-gray-800/50 backdrop-blur border border-gray-700 rounded-3xl p-10 shadow-lg hover:bg-gray-800/70 transition-all duration-300"
-            >
-              <div className="text-transparent bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-6xl font-bold mb-6">
-                {s.step}
-              </div>
-              <p className="text-lg text-gray-300">{s.text}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
 
-      {/* SUPPORTED FORMATS */}
-      <section className="py-28 px-4 sm:px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">Supported Ad Formats</h2>
-        <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            { format: "Rewarded Video", desc: "Engage users and boost retention with highly rewarding ad experiences." },
-            { format: "Interstitial", desc: "Full-screen ads that drive high CPMs without hurting UX." },
-            { format: "Banners", desc: "Lightweight, evergreen ad placements that blend with your app." },
-            { format: "Native Ads", desc: "Seamlessly integrated ads that feel organic to your design." },
-          ].map((f, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-gray-800/50 backdrop-blur border border-gray-700 p-6 rounded-3xl shadow-md hover:shadow-xl hover:bg-gray-800/70 text-center transition-all duration-300"
-            >
-              <div className="h-24 bg-gray-700/50 border border-gray-600 rounded-2xl mb-4 flex items-center justify-center text-gray-500 text-sm">
-                [icon]
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">{f.format}</h3>
-              <p className="text-gray-400">{f.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
+      <HowItWorks />
+      {/* SUPPORTED FORMATS - Custom Horizontal Layout */}
+      <FormatAd />
       {/* DASHBOARD PREVIEW */}
       <section className="py-28 bg-gradient-to-r from-gray-800/30 to-gray-700/30 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
@@ -283,66 +277,95 @@ export default function App() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl font-bold mb-6 text-white">Real-Time Insights & Control</h2>
+            <h2 className="text-4xl font-bold mb-6 text-white">
+              Real-Time Insights & Control
+            </h2>
             <p className="text-lg text-gray-300 mb-6">
-              Track impressions, eCPMs, fill rates, and revenue in real time. Test, tweak, and deploy changes instantly from our intuitive dashboard.
+              Track impressions, eCPMs, fill rates, and revenue in real time.
+              Test, tweak, and deploy changes instantly from our intuitive
+              dashboard.
             </p>
             <Button>Explore Analytics</Button>
           </motion.div>
         </div>
       </section>
 
-     
-     {/* TESTIMONIALS */}
-<section className="py-28 px-4 sm:px-6">
-  <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
-    Loved by Developers Worldwide
-  </h2>
-  <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-    {[
-      { 
-        name: "Sophia R.", 
-        company: "GameDev Studio", 
-        text: "adpocket.ai doubled our ARPDAU in just two months. The integration was effortless."
-      },
-      { 
-        name: "Rahul K.", 
-        company: "Utility App Co.", 
-        text: "Finally, an SDK that's lightweight, transparent, and actually drives revenue."
-      },
-      { 
-        name: "Elena M.", 
-        company: "Creative Labs", 
-        text: "The dashboard insights are a game changer. We can react instantly to trends." 
-      },
-    ].map((t, i) => (
-      <motion.div
-        key={i}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: i * 0.2 }}
-        className="bg-gray-800/50 backdrop-blur border border-gray-700 rounded-3xl p-8 shadow-md hover:shadow-xl hover:bg-gray-800/70 transition-all duration-300"
-      >
-        <p className="text-gray-300 italic mb-6">"{t.text}"</p>
-        <div className="font-bold text-white">{t.name}</div>
-        <div className="text-sm text-gray-500">{t.company}</div>
-      </motion.div>
-    ))}
-  </div>
-</section>
-
+      {/* TESTIMONIALS */}
+      <section className="py-28 px-4 sm:px-6">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
+          Loved by Developers Worldwide
+        </h2>
+        <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            {
+              name: "Sophia R.",
+              company: "GameDev Studio",
+              text: "adpocket.ai doubled our ARPDAU in just two months. The integration was effortless.",
+            },
+            {
+              name: "Rahul K.",
+              company: "Utility App Co.",
+              text: "Finally, an SDK that's lightweight, transparent, and actually drives revenue.",
+            },
+            {
+              name: "Elena M.",
+              company: "Creative Labs",
+              text: "The dashboard insights are a game changer. We can react instantly to trends.",
+            },
+          ].map((t, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.2 }}
+              className="bg-gray-800/50 backdrop-blur border border-gray-700 rounded-3xl p-8 shadow-md hover:shadow-xl hover:bg-gray-800/70 transition-all duration-300"
+            >
+              <p className="text-gray-300 italic mb-6">"{t.text}"</p>
+              <div className="font-bold text-white">{t.name}</div>
+              <div className="text-sm text-gray-500">{t.company}</div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
       {/* PRICING */}
-      <section id="pricing" className="py-28 bg-gradient-to-r from-gray-800/30 to-gray-700/30 px-4 sm:px-6">
+      <section
+        id="pricing"
+        className="py-28 bg-gradient-to-r from-gray-800/30 to-gray-700/30 px-4 sm:px-6"
+      >
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
           Flexible Pricing for Every Stage
         </h2>
         <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            { plan: "Starter", price: "$0", features: ["Up to 50k impressions/month", "Basic analytics", "Community support"] },
-            { plan: "Pro", price: "$99/mo", features: ["Unlimited impressions", "Advanced reporting", "Priority support"] },
-            { plan: "Enterprise", price: "Custom", features: ["Dedicated manager", "Custom integrations", "24/7 premium support"] },
+            {
+              plan: "Starter",
+              price: "$0",
+              features: [
+                "Up to 50k impressions/month",
+                "Basic analytics",
+                "Community support",
+              ],
+            },
+            {
+              plan: "Pro",
+              price: "$99/mo",
+              features: [
+                "Unlimited impressions",
+                "Advanced reporting",
+                "Priority support",
+              ],
+            },
+            {
+              plan: "Enterprise",
+              price: "Custom",
+              features: [
+                "Dedicated manager",
+                "Custom integrations",
+                "24/7 premium support",
+              ],
+            },
           ].map((p, i) => (
             <motion.div
               key={i}
@@ -377,12 +400,27 @@ export default function App() {
         </h2>
         <div className="max-w-3xl mx-auto space-y-6">
           {[
-            { q: "How long does integration take?", a: "Most developers integrate adpocket.ai in under 30 minutes with our lightweight SDK." },
-            { q: "Is there any revenue share?", a: "We work on a transparent revenue share model. No hidden fees." },
-            { q: "Which ad networks do you support?", a: "We partner with over 30 top-tier networks including Google, Meta, and AppLovin." },
-            { q: "Is my user data safe?", a: "Absolutely. We are fully GDPR and CCPA compliant with strict data policies." },
+            {
+              q: "How long does integration take?",
+              a: "Most developers integrate adpocket.ai in under 30 minutes with our lightweight SDK.",
+            },
+            {
+              q: "Is there any revenue share?",
+              a: "We work on a transparent revenue share model. No hidden fees.",
+            },
+            {
+              q: "Which ad networks do you support?",
+              a: "We partner with over 30 top-tier networks including Google, Meta, and AppLovin.",
+            },
+            {
+              q: "Is my user data safe?",
+              a: "Absolutely. We are fully GDPR and CCPA compliant with strict data policies.",
+            },
           ].map((f, i) => (
-            <div key={i} className="border border-gray-700 rounded-2xl bg-gray-800/50 backdrop-blur shadow-md">
+            <div
+              key={i}
+              className="border border-gray-700 rounded-2xl bg-gray-800/50 backdrop-blur shadow-md"
+            >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
                 className="w-full text-left px-6 py-4 font-semibold text-lg flex justify-between text-white hover:bg-gray-800/70 transition-colors duration-200 rounded-2xl"
@@ -411,7 +449,10 @@ export default function App() {
       </section>
 
       {/* CTA */}
-      <section id="contact" className="py-28 bg-gradient-to-r from-indigo-600 to-teal-500 text-white text-center px-4 sm:px-6">
+      <section
+        id="contact"
+        className="py-28 bg-gradient-to-r from-indigo-600 to-teal-500 text-white text-center px-4 sm:px-6"
+      >
         <motion.h2
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -426,12 +467,13 @@ export default function App() {
           transition={{ delay: 0.3, duration: 0.8 }}
           className="text-lg sm:text-xl mb-10 max-w-2xl mx-auto"
         >
-          Join thousands of developers who trust adpocket.ai to deliver premium ads and unbeatable performance.
+          Join thousands of developers who trust adpocket.ai to deliver premium
+          ads and unbeatable performance.
         </motion.p>
         <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
           <Button variant="white">Download SDK</Button>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="border-white text-white hover:bg-white hover:text-indigo-600"
           >
             Contact Us
@@ -442,10 +484,30 @@ export default function App() {
       {/* FOOTER */}
       <footer className="py-12 text-center text-sm text-gray-400 bg-gray-900/50 backdrop-blur px-4">
         <div className="mb-4 flex flex-wrap justify-center gap-6">
-          <a href="#docs" className="hover:text-white transition-colors duration-200">Docs</a>
-          <a href="#contact" className="hover:text-white transition-colors duration-200">Contact</a>
-          <a href="#privacy" className="hover:text-white transition-colors duration-200">Privacy</a>
-          <a href="#careers" className="hover:text-white transition-colors duration-200">Careers</a>
+          <a
+            href="#docs"
+            className="hover:text-white transition-colors duration-200"
+          >
+            Docs
+          </a>
+          <a
+            href="#contact"
+            className="hover:text-white transition-colors duration-200"
+          >
+            Contact
+          </a>
+          <a
+            href="#privacy"
+            className="hover:text-white transition-colors duration-200"
+          >
+            Privacy
+          </a>
+          <a
+            href="#careers"
+            className="hover:text-white transition-colors duration-200"
+          >
+            Careers
+          </a>
         </div>
         <p>© 2025 adpocket.ai</p>
       </footer>
