@@ -207,7 +207,7 @@ export default function App() {
 
       {/* WHY CHOOSE US */}
 
-      <WhyChooseUs/>
+      <WhyChooseUs />
 
       {/* HOW IT WORKS */}
 
@@ -224,8 +224,13 @@ export default function App() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="w-full h-96 bg-gray-800/50 border border-gray-700 rounded-3xl shadow-inner flex items-center justify-center text-gray-500 text-xl">
-              [ Dashboard Screenshot ]
+            <div className="w-full h-96 bg-gray-800/50 border border-gray-700 rounded-3xl shadow-inner overflow-hidden">
+              <img
+                src="https://panel.digitarmedia.com/admin/uploads/sdk1753085789.png"
+                className="w-full h-full object-contain p-4 rounded-xl"
+                alt="SDK Dashboard Preview"
+                loading="lazy"
+              />
             </div>
           </motion.div>
           <motion.div

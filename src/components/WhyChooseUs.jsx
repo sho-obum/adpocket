@@ -42,13 +42,11 @@ const FEATURES = [
 
 export default function WhyChooseUs() {
   const [index, setIndex] = useState(0);
-
-  /* ---------- helpers ---------- */
   const next = () => index < FEATURES.length - 1 && setIndex(index + 1);
   const prev = () => index > 0 && setIndex(index - 1);
 
-  /* ---------- card reuse ---------- */
-  const Card = ({ feature }) => (
+  /* ---------- Desktop Card ---------- */
+  const CardDesktop = ({ feature }) => (
     <motion.div
       key={feature.title}
       initial={{ opacity: 0, y: 30 }}
@@ -58,41 +56,38 @@ export default function WhyChooseUs() {
       className="relative rounded-3xl overflow-hidden"
       style={{ height: "400px" }}
     >
-      {/* Animated gradient border */}
+      {/* static gradient border */}
       <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-teal-500 rounded-3xl opacity-75">
         <div className="absolute inset-[2px] bg-gray-800/90 rounded-3xl"></div>
       </div>
-      
-      {/* Hover animated border */}
-      <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-teal-500 rounded-3xl opacity-0 hover:opacity-100 transition-opacity duration-300 group">
+      {/* hover-animated gradient border */}
+      <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-teal-500 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="absolute inset-[2px] bg-gray-800/90 rounded-3xl"></div>
       </div>
 
+      {/* content */}
       <motion.div
-        className="relative z-10 h-full flex flex-col p-8"
+        className="relative z-10 h-full flex flex-col p-8 group"
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
-        {/* Row: Icon + Title (Parallel Layout) */}
+        {/* icon + title */}
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-16 h-16 flex-shrink-0 flex items-center justify-center
-                          rounded-xl bg-gradient-to-br from-indigo-500 to-teal-500 text-3xl shadow-lg">
+          <div className="w-16 h-16 flex items-center justify-center flex-shrink-0 rounded-xl bg-gradient-to-br from-indigo-500 to-teal-500 text-3xl shadow-lg">
             {feature.icon}
           </div>
-          <h3 className="text-2xl font-semibold text-white">
-            {feature.title}
-          </h3>
+          <h3 className="text-2xl font-semibold text-white">{feature.title}</h3>
         </div>
 
-        {/* Description */}
-        <p className="text-gray-300 leading-relaxed flex-1 mb-6">{feature.text}</p>
+        {/* description */}
+        <p className="text-gray-300 flex-1 mb-6 leading-relaxed">{feature.text}</p>
 
-        {/* Tags/Badges row */}
+        {/* tags */}
         <div className="flex flex-wrap gap-2">
           {feature.tags.map((tag, i) => (
             <span
               key={i}
-              className="px-3 py-1 bg-gray-700/50 border border-gray-600 rounded-full text-sm text-gray-300 hover:bg-gray-600/50 transition-colors duration-200"
+              className="px-3 py-1 bg-gray-700/50 border border-gray-600 rounded-full text-sm text-gray-300"
             >
               {tag}
             </span>
@@ -102,10 +97,9 @@ export default function WhyChooseUs() {
     </motion.div>
   );
 
-  /* ---------- layout ---------- */
   return (
     <section id="features" className="py-28 px-4 sm:px-6 overflow-x-hidden">
-      {/* Custom Scrollbar Styles */}
+      {/* custom scrollbar CSS */}
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;
@@ -128,73 +122,41 @@ export default function WhyChooseUs() {
       `}</style>
 
       <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
-        Why Developers Choose adpocket.ai
+        Why Clients Choose Adpocket.ai
       </h2>
 
-      {/*    ------------- DESKTOP (≥ lg) -------------    */}
+      {/* Desktop split-screen */}
       <div className="hidden lg:grid grid-cols-2 gap-12 max-w-7xl mx-auto">
-        {/* left : carousel */}
         <div className="relative px-16">
           <AnimatePresence mode="wait">
-            <Card key={index} feature={FEATURES[index]} />
+            <CardDesktop feature={FEATURES[index]} />
           </AnimatePresence>
 
-          {/* Arrows positioned outside the card */}
-          <AnimatePresence>
-            {index > 0 && (
-              <motion.button
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                onClick={prev}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 
-                          bg-gray-800/80 hover:bg-gray-700/80 border border-gray-600 
-                          rounded-full p-3 transition-all duration-300 hover:scale-110"
-              >
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </motion.button>
-            )}
+          {/* arrows */}
+          {index > 0 && (
+            <button
+              onClick={prev}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-10
+                         bg-gray-800/80 border border-gray-600 rounded-full p-3 hover:scale-110 transition"
+            >
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+          )}
+          {index < FEATURES.length - 1 && (
+            <button
+              onClick={next}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-10
+                         bg-gray-800/80 border border-gray-600 rounded-full p-3 hover:scale-110 transition"
+            >
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          )}
 
-            {index < FEATURES.length - 1 && (
-              <motion.button
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                onClick={next}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 
-                          bg-gray-800/80 hover:bg-gray-700/80 border border-gray-600 
-                          rounded-full p-3 transition-all duration-300 hover:scale-110"
-              >
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </motion.button>
-            )}
-          </AnimatePresence>
-
-          {/* Dot slider below card */}
+          {/* dots */}
           <div className="flex justify-center mt-8 space-x-2">
             {FEATURES.map((_, i) => (
               <button
@@ -203,56 +165,47 @@ export default function WhyChooseUs() {
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   i === index
                     ? "bg-gradient-to-r from-indigo-500 to-teal-500 scale-125"
-                    : "bg-gray-600 hover:bg-gray-500"
+                    : "bg-gray-600"
                 }`}
               />
             ))}
           </div>
         </div>
 
-        {/* right : vertical list */}
+        {/* right: scrollable list */}
         <div
           className="space-y-4 pl-4 border-l border-gray-700/60 custom-scrollbar overflow-x-hidden"
           style={{ height: "400px", overflowY: "auto" }}
         >
           {FEATURES.map((f, i) => (
             <motion.button
-              key={f.title}
+              key={i}
               onClick={() => setIndex(i)}
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className={`flex items-center gap-4 w-full text-left p-4 rounded-xl
-                          transition-all duration-300
-                          ${
-                            i === index
-                              ? "bg-gray-800/60 border border-gray-600 shadow-lg"
-                              : "border border-transparent"
-                          }`}
+              className={`flex items-start gap-4 w-full text-left p-4 rounded-xl transition-all duration-300  ${
+                i === index ? "bg-gray-800/60 border border-gray-600 shadow-lg" : ""
+              }`}
             >
-              <div className="w-12 h-12 flex items-center justify-center
-                              rounded-xl bg-gradient-to-br from-indigo-500 to-teal-500 text-xl shrink-0">
+              <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-teal-500 text-xl shrink-0">
                 {f.icon}
               </div>
               <div className="flex-1">
-                <span
-                  className={`text-base font-medium block ${
-                    i === index ? "text-white" : "text-gray-300"
-                  }`}
-                >
+                <span className={`block text-base font-medium ${
+                  i === index ? "text-white" : "text-gray-300"
+                }`}>
                   {f.title}
                 </span>
-                <span className="text-sm text-gray-400 mt-1 block">
-                  {f.text.substring(0, 50)}...
-                </span>
+                <p className="text-sm text-gray-400 mt-1">{f.text}</p>
+                
               </div>
             </motion.button>
           ))}
         </div>
       </div>
 
-      {/*    ------------- MOBILE / TABLET (carousel only) -------------    */}
-      <div className="lg:hidden max-w-md mx-auto relative px-12">
-        {/* Navigation Arrows for Mobile - Outside card */}
+      {/* Mobile carousel */}
+      <div className="lg:hidden max-w-md mx-auto relative px-4 overflow-hidden">
         <AnimatePresence>
           {index > 0 && (
             <motion.button
@@ -260,69 +213,70 @@ export default function WhyChooseUs() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               onClick={prev}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 
-                        bg-gray-800/80 hover:bg-gray-700/80 border border-gray-600 
-                        rounded-full p-3 transition-all duration-300 hover:scale-110"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-10
+                         bg-gray-800/80 border border-gray-600 rounded-full p-3 hover:scale-110 transition"
             >
-              <svg
-                className="w-5 h-5 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </motion.button>
           )}
-
           {index < FEATURES.length - 1 && (
             <motion.button
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
               onClick={next}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 
-                        bg-gray-800/80 hover:bg-gray-700/80 border border-gray-600 
-                        rounded-full p-3 transition-all duration-300 hover:scale-110"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-10
+                         bg-gray-800/80 border border-gray-600 rounded-full p-3 hover:scale-110 transition"
             >
-              <svg
-                className="w-5 h-5 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </motion.button>
           )}
         </AnimatePresence>
 
-        {/* swipe container */}
         <div className="overflow-hidden">
           <motion.div
-            className="flex"
-            animate={{ x: `-${index * 100}%` }}
-            transition={{ type: "spring", stiffness: 70, damping: 18 }}
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${index * 100}%)` }}
           >
             {FEATURES.map((f, i) => (
-              <div key={f.title} className="w-full px-2 shrink-0">
-                <Card feature={f} />
+              <div key={i} className="w-full flex-shrink-0 px-2">
+              <motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.4, delay: i * 0.1 }}
+  className="bg-gray-800/60 backdrop-blur border border-gray-700 rounded-3xl p-6 shadow-lg flex flex-col items-center text-center"
+>
+  {/* icon */}
+  <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-teal-500 text-3xl shadow-lg">
+    {f.icon}
+  </div>
+  {/* title */}
+  <h3 className="text-xl font-semibold text-white mb-2">{f.title}</h3>
+  {/* text */}
+  <p className="text-gray-300 mb-4">{f.text}</p>
+  {/* tags - hidden on mobile */}
+  <div className="hidden flex-wrap gap-2">
+    {f.tags.map((tag, j) => (
+      <span
+        key={j}
+        className="px-3 py-1 bg-gray-700/50 border border-gray-600 rounded-full text-xs text-gray-300"
+      >
+        {tag}
+      </span>
+    ))}
+  </div>
+</motion.div>
+
               </div>
             ))}
           </motion.div>
         </div>
 
-        {/* dots for mobile */}
+        {/* dots */}
         <div className="flex justify-center mt-6 space-x-2">
           {FEATURES.map((_, i) => (
             <button
