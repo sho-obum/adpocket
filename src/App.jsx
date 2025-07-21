@@ -5,8 +5,14 @@ import HowItWorks from "./components/HowItWorks";
 import WhyChooseUs from "./components/WhyChooseUs";
 import FAQSection from "./components/FAQSection";
 import ContactModal from "./components/ContactModal";
+import PrivacyModal from "./components/PrivacyModal";
 
-const Button = ({ children, variant = "primary", className = "" }) => {
+const Button = ({
+  children,
+  variant = "primary",
+  className = "",
+  ...props
+}) => {
   const base =
     "rounded-xl px-6 py-3 font-medium transition transform hover:scale-105";
   const variants = {
@@ -18,13 +24,138 @@ const Button = ({ children, variant = "primary", className = "" }) => {
     dark: "bg-gray-800 text-white border border-gray-700 hover:bg-gray-700",
   };
   return (
-    <button className={`${base} ${variants[variant]} ${className}`}>
+    <button className={`${base} ${variants[variant]} ${className}`} {...props}>
       {children}
     </button>
   );
 };
 
-const Navbar = () => {
+// Careers Modal
+const CareersModal = ({ isOpen, onClose }) => {
+  const jobOpenings = [
+    {
+      title: "Senior Frontend Developer",
+      department: "Engineering",
+      location: "India",
+      type: "Full-time",
+      description:
+        "Build exceptional user interfaces for our SDK dashboard and developer tools using React, TypeScript, and modern web technologies.",
+    },
+    {
+      title: "Ad Operations Manager",
+      department: "Operations",
+      location: "Remote",
+      type: "Full-time",
+      description:
+        "Manage ad inventory, optimize campaign performance, and work with demand partners to maximize revenue for our publisher network.",
+    },
+    {
+      title: "Mobile SDK Engineer",
+      department: "Engineering",
+      location: "Remote",
+      type: "Full-time",
+      description:
+        "Develop and maintain our iOS and Android SDKs, focusing on performance optimization and seamless integration experiences.",
+    },
+  ];
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-gray-900 border border-gray-700 rounded-2xl p-8 max-w-4xl w-full max-h-[80vh] overflow-y-auto"
+            >
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-white">Join Our Team</h2>
+                <button
+                  onClick={onClose}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <p className="text-gray-300 mb-8">
+                We're building the future of mobile advertising. Join our team
+                of innovators and help shape how apps monetize globally.
+              </p>
+
+              <div className="space-y-6">
+                {jobOpenings.map((job, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-gray-800/50 border border-gray-700 rounded-xl p-6 hover:bg-gray-800/70 transition-colors"
+                  >
+                    <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                      <div>
+                        <h3 className="text-xl font-semibold text-white mb-2">
+                          {job.title}
+                        </h3>
+                        <div className="flex flex-wrap gap-3 text-sm">
+                          <span className="bg-indigo-600/20 text-indigo-400 px-3 py-1 rounded-full">
+                            {job.department}
+                          </span>
+                          <span className="bg-teal-600/20 text-teal-400 px-3 py-1 rounded-full">
+                            {job.type}
+                          </span>
+                          <span className="text-gray-400">
+                            📍 {job.location}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-gray-300 mb-4">{job.description}</p>
+                  
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="mt-8 text-center">
+                <p className="text-gray-400 mb-4">
+                  Don't see the right role? We're always looking for talented
+                  people.
+                </p>
+                <Button variant="primary">Send Us Your Resume</Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};
+
+// REMOVED THE PROBLEMATIC LINE THAT WAS HERE:
+// <PrivacyModal isOpen={isPrivacyModalOpen} onClose={() => setIsPrivacyModalOpen(false)} />;
+
+const Navbar = ({ onContactOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -33,10 +164,15 @@ const Navbar = () => {
     { name: "Home", href: "#home" },
     { name: "Features", href: "#features" },
     { name: "How It Works", href: "#how-it-works" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Docs", href: "#docs" },
-    { name: "Contact", href: "#contact" },
   ];
+
+  const scrollToSection = (href) => {
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -53,15 +189,19 @@ const Navbar = () => {
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
               {menuItems.map((item) => (
-                <a
+                <button
                   key={item.name}
-                  href={item.href}
+                  onClick={() => scrollToSection(item.href)}
                   className="text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {item.name}
-                </a>
+                </button>
               ))}
-              <Button variant="primary" className="ml-4">
+              <Button
+                variant="primary"
+                className="ml-4"
+                onClick={onContactOpen}
+              >
                 Get in touch
               </Button>
             </div>
@@ -108,17 +248,16 @@ const Navbar = () => {
             >
               <div className="px-4 py-6 space-y-4">
                 {menuItems.map((item, index) => (
-                  <motion.a
+                  <motion.button
                     key={item.name}
-                    href={item.href}
+                    onClick={() => scrollToSection(item.href)}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="block text-gray-300 hover:text-white py-2 text-lg"
-                    onClick={() => setIsOpen(false)}
+                    className="block text-gray-300 hover:text-white py-2 text-lg w-full text-left"
                   >
                     {item.name}
-                  </motion.a>
+                  </motion.button>
                 ))}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
@@ -126,8 +265,15 @@ const Navbar = () => {
                   transition={{ delay: menuItems.length * 0.1 }}
                   className="pt-4"
                 >
-                  <Button variant="primary" className="w-full">
-                    Request a Demo
+                  <Button
+                    variant="primary"
+                    className="w-full"
+                    onClick={() => {
+                      onContactOpen();
+                      setIsOpen(false);
+                    }}
+                  >
+                    Get in touch
                   </Button>
                 </motion.div>
               </div>
@@ -154,9 +300,9 @@ const Navbar = () => {
 
 export default function App() {
   const [open, setOpen] = useState(null);
-  
-  // FIXED: Move this inside the App component
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
+  const [isCareersModalOpen, setIsCareersModalOpen] = useState(false);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
@@ -169,7 +315,7 @@ export default function App() {
 
   return (
     <div className="bg-gradient-to-b from-gray-900 via-black to-gray-800 text-white min-h-screen overflow-x-hidden">
-      <Navbar />
+      <Navbar onContactOpen={() => setIsContactModalOpen(true)} />
 
       {/* HERO */}
       <section
@@ -205,13 +351,23 @@ export default function App() {
           animate="show"
           className="mt-10 flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4"
         >
-          <Button>Request a demo</Button>
+          <Button onClick={() => setIsContactModalOpen(true)}>
+            Request a demo
+          </Button>
         </motion.div>
       </section>
 
-      <WhyChooseUs />
-      <HowItWorks />
-      <FormatAd />
+      <div id="features">
+        <WhyChooseUs />
+      </div>
+
+      <div id="how-it-works">
+        <HowItWorks />
+      </div>
+
+      <div id="pricing">
+        <FormatAd />
+      </div>
 
       {/* DASHBOARD PREVIEW */}
       <section className="py-28 bg-gradient-to-r from-gray-800/30 to-gray-700/30 px-4 sm:px-6">
@@ -243,7 +399,9 @@ export default function App() {
               Test, tweak, and deploy changes instantly from our intuitive
               dashboard.
             </p>
-            <Button>Request a Demo!</Button>
+            <Button onClick={() => setIsContactModalOpen(true)}>
+              Request a Demo!
+            </Button>
           </motion.div>
         </div>
       </section>
@@ -287,7 +445,9 @@ export default function App() {
         </div>
       </section>
 
-      <FAQSection />
+      <div id="docs">
+        <FAQSection />
+      </div>
 
       {/* CTA */}
       <section
@@ -322,40 +482,64 @@ export default function App() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-12 text-center text-sm text-gray-400 bg-gray-900/50 backdrop-blur px-4">
-        <div className="mb-4 flex flex-wrap justify-center gap-6">
-          <a
-            href="#docs"
-            className="hover:text-white transition-colors duration-200"
-          >
-            Docs
-          </a>
-          <a
-            href="#contact"
-            className="hover:text-white transition-colors duration-200"
-          >
-            Contact
-          </a>
-          <a
-            href="#privacy"
-            className="hover:text-white transition-colors duration-200"
-          >
-            Privacy
-          </a>
-          <a
-            href="#careers"
-            className="hover:text-white transition-colors duration-200"
-          >
-            Careers
-          </a>
+      <footer className="py-16 text-center bg-gray-900/80 backdrop-blur px-4 border-t border-gray-800">
+        <div className="max-w-6xl mx-auto">
+          {/* Logo and Description */}
+          <div className="mb-8">
+            <span className="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-transparent">
+              Adpocket.ai
+            </span>
+            <p className="text-gray-400 mt-2 max-w-md mx-auto">
+              Empowering developers to maximize app revenue through intelligent
+              ad monetization.
+            </p>
+          </div>
+
+          {/* Footer Links */}
+          <div className="mb-8 flex flex-wrap justify-center gap-8">
+            <button
+              onClick={() => setIsContactModalOpen(true)}
+              className="text-gray-400 hover:text-white transition-colors duration-200 font-medium"
+            >
+              Contact
+            </button>
+            <button
+              onClick={() => setIsPrivacyModalOpen(true)}
+              className="text-gray-400 hover:text-white transition-colors duration-200 font-medium"
+            >
+              Privacy Policy
+            </button>
+            <button
+              onClick={() => setIsCareersModalOpen(true)}
+              className="text-gray-400 hover:text-white transition-colors duration-200 font-medium"
+            >
+              Careers
+            </button>
+          </div>
+
+          {/* Copyright */}
+          <div className="pt-8 border-t border-gray-800">
+            <p className="text-gray-500">
+              © 2025 Adpocket.ai. All rights reserved.
+            </p>
+          </div>
         </div>
-        <p>© 2025 adpocket.ai</p>
       </footer>
 
-      {/* Contact Modal */}
+      {/* Modals */}
       <ContactModal
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
+      />
+
+      <PrivacyModal
+        isOpen={isPrivacyModalOpen}
+        onClose={() => setIsPrivacyModalOpen(false)}
+      />
+
+      <CareersModal
+        isOpen={isCareersModalOpen}
+        onClose={() => setIsCareersModalOpen(false)}
       />
     </div>
   );

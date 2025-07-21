@@ -76,6 +76,7 @@ const ContactModal = ({ isOpen, onClose }) => {
       query: formData.query.trim(),
       timestamp: new Date().toISOString(),
       source: "contact_modal",
+      req_url: "adpocket.ai",
     };
 
     try {
