@@ -6,6 +6,7 @@ import WhyChooseUs from "./components/WhyChooseUs";
 import FAQSection from "./components/FAQSection";
 import ContactModal from "./components/ContactModal";
 import PrivacyModal from "./components/PrivacyModal";
+import RequestDemoModal from "./components/RequestDemoModal";
 
 const Button = ({
   children,
@@ -132,7 +133,6 @@ const CareersModal = ({ isOpen, onClose }) => {
                       </div>
                     </div>
                     <p className="text-gray-300 mb-4">{job.description}</p>
-                  
                   </motion.div>
                 ))}
               </div>
@@ -303,6 +303,7 @@ export default function App() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
   const [isCareersModalOpen, setIsCareersModalOpen] = useState(false);
+  const [isRequestDemoModalOpen, setIsRequestDemoModalOpen] = useState(false);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
@@ -351,7 +352,10 @@ export default function App() {
           animate="show"
           className="mt-10 flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4"
         >
-          <Button onClick={() => setIsContactModalOpen(true)}>
+          <Button onClick={() => setIsRequestDemoModalOpen(true)} variant="secondary " className="border ">
+            Get in touch
+          </Button>
+          <Button onClick={() => setIsRequestDemoModalOpen(true)}>
             Request a demo
           </Button>
         </motion.div>
@@ -399,7 +403,7 @@ export default function App() {
               Test, tweak, and deploy changes instantly from our intuitive
               dashboard.
             </p>
-            <Button onClick={() => setIsContactModalOpen(true)}>
+            <Button onClick={() => setIsRequestDemoModalOpen(true)}>
               Request a Demo!
             </Button>
           </motion.div>
@@ -530,6 +534,11 @@ export default function App() {
       <ContactModal
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
+      />
+
+      <RequestDemoModal
+        isOpen={isRequestDemoModalOpen}
+        onClose={() => setIsRequestDemoModalOpen(false)}
       />
 
       <PrivacyModal
