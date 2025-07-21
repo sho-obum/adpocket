@@ -352,7 +352,11 @@ export default function App() {
           animate="show"
           className="mt-10 flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4"
         >
-          <Button onClick={() => setIsRequestDemoModalOpen(true)} variant="secondary " className="border ">
+          <Button
+            onClick={() => setIsRequestDemoModalOpen(true)}
+            variant="secondary "
+            className="border "
+          >
             Get in touch
           </Button>
           <Button onClick={() => setIsRequestDemoModalOpen(true)}>
@@ -374,14 +378,39 @@ export default function App() {
       </div>
 
       {/* DASHBOARD PREVIEW */}
+      {/* DASHBOARD PREVIEW */}
       <section className="py-28 bg-gradient-to-r from-gray-800/30 to-gray-700/30 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+          {/* Text Content - Order 1 on mobile, Order 2 on desktop */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="lg:order-2 text-center lg:text-left"
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-white">
+              Real-Time Insights & Control
+            </h2>
+            <p className="text-base sm:text-lg text-gray-300 mb-4 sm:mb-6 max-w-lg mx-auto lg:mx-0">
+              Track impressions, eCPMs, fill rates, and revenue in real time.
+              Test, tweak, and deploy changes instantly from our intuitive
+              dashboard.
+            </p>
+            <div className="flex justify-center lg:justify-start">
+              <Button onClick={() => setIsRequestDemoModalOpen(true)}>
+                Request a Demo!
+              </Button>
+            </div>
+          </motion.div>
+
+          {/* Image Content - Order 2 on mobile, Order 1 on desktop */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
+            className="lg:order-1"
           >
-            <div className="w-full h-96 bg-gray-800/50 border border-gray-700 rounded-3xl shadow-inner overflow-hidden">
+            <div className="w-full h-64 sm:h-80 lg:h-96 bg-gray-800/50 border border-gray-700 rounded-3xl shadow-inner overflow-hidden">
               <img
                 src="https://panel.digitarmedia.com/admin/uploads/sdk1753085789.png"
                 className="w-full h-full object-contain p-4"
@@ -389,23 +418,6 @@ export default function App() {
                 loading="lazy"
               />
             </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl font-bold mb-6 text-white">
-              Real-Time Insights & Control
-            </h2>
-            <p className="text-lg text-gray-300 mb-6">
-              Track impressions, eCPMs, fill rates, and revenue in real time.
-              Test, tweak, and deploy changes instantly from our intuitive
-              dashboard.
-            </p>
-            <Button onClick={() => setIsRequestDemoModalOpen(true)}>
-              Request a Demo!
-            </Button>
           </motion.div>
         </div>
       </section>
