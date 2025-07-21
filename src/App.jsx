@@ -53,7 +53,7 @@ const Navbar = () => {
             </div>
 
             {/* Mobile Hamburger */}
-            <div className="md:hidden">
+            <div className="md:hidden mr-5">
               <button
                 onClick={toggleMenu}
                 className="relative w-8 h-8 focus:outline-none"
