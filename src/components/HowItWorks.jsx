@@ -42,9 +42,7 @@ const HowItWorks = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           {/* Header */}
           <div className="text-center mb-8 md:mb-16">
-            <div className="inline-block px-3 py-1 md:px-4 md:py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-xs md:text-sm font-medium mb-3 md:mb-4 animate-fadeIn">
-              Simple Process
-            </div>
+          
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-3 md:mb-6 animate-fadeInUp">
               How It Works
             </h2>
