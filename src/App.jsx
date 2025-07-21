@@ -60,7 +60,7 @@ const Navbar = () => {
                 </a>
               ))}
               <Button variant="primary" className="ml-4">
-                Get Started
+              Get in touch
               </Button>
             </div>
 
@@ -125,7 +125,7 @@ const Navbar = () => {
                   className="pt-4"
                 >
                   <Button variant="primary" className="w-full">
-                    Get Started
+                  Request a Demo
                   </Button>
                 </motion.div>
               </div>
@@ -200,8 +200,8 @@ export default function App() {
           animate="show"
           className="mt-10 flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4"
         >
-          <Button>Get Started</Button>
-          <Button variant="outline">View Documentation</Button>
+          <Button>Request a demo</Button>
+          {/* <Button variant="outline">View Documentation</Button> */}
         </motion.div>
       </section>
 
@@ -246,7 +246,7 @@ export default function App() {
               Test, tweak, and deploy changes instantly from our intuitive
               dashboard.
             </p>
-            <Button>Explore Analytics</Button>
+            <Button>Request a Demo!</Button>
           </motion.div>
         </div>
       </section>
@@ -290,70 +290,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* PRICING */}
-      <section
-        id="pricing"
-        className="py-28 bg-gradient-to-r from-gray-800/30 to-gray-700/30 px-4 sm:px-6"
-      >
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
-          Flexible Pricing for Every Stage
-        </h2>
-        <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[
-            {
-              plan: "Starter",
-              price: "$0",
-              features: [
-                "Up to 50k impressions/month",
-                "Basic analytics",
-                "Community support",
-              ],
-            },
-            {
-              plan: "Pro",
-              price: "$99/mo",
-              features: [
-                "Unlimited impressions",
-                "Advanced reporting",
-                "Priority support",
-              ],
-            },
-            {
-              plan: "Enterprise",
-              price: "Custom",
-              features: [
-                "Dedicated manager",
-                "Custom integrations",
-                "24/7 premium support",
-              ],
-            },
-          ].map((p, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.2 }}
-              className="bg-gray-800/50 backdrop-blur border border-gray-700 p-8 rounded-3xl shadow-lg hover:shadow-2xl hover:bg-gray-800/70 transition-all duration-300"
-            >
-              <h3 className="text-2xl font-bold mb-4 text-white">{p.plan}</h3>
-              <p className="text-3xl font-extrabold bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-transparent mb-6">
-                {p.price}
-              </p>
-              <ul className="space-y-2 mb-6 text-gray-300">
-                {p.features.map((f, idx) => (
-                  <li key={idx} className="flex items-center">
-                    <span className="text-green-400 mr-2">✓</span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <Button className="w-full">Choose {p.plan}</Button>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
+    
       {/* FAQ */}
       <section className="py-28 px-4 sm:px-6">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
