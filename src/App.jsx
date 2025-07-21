@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import FormatAd from "./components/FormatAd";
 import HowItWorks from "./components/HowItWorks";
 import WhyChooseUs from "./components/WhyChooseUs";
+import FAQSection from "./components/FAQSection";
+import ContactModal from "./components/ContactModal";
 
 const Button = ({ children, variant = "primary", className = "" }) => {
   const base =
@@ -60,7 +62,7 @@ const Navbar = () => {
                 </a>
               ))}
               <Button variant="primary" className="ml-4">
-              Get in touch
+                Get in touch
               </Button>
             </div>
 
@@ -125,7 +127,7 @@ const Navbar = () => {
                   className="pt-4"
                 >
                   <Button variant="primary" className="w-full">
-                  Request a Demo
+                    Request a Demo
                   </Button>
                 </motion.div>
               </div>
@@ -152,6 +154,9 @@ const Navbar = () => {
 
 export default function App() {
   const [open, setOpen] = useState(null);
+  
+  // FIXED: Move this inside the App component
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
@@ -201,19 +206,11 @@ export default function App() {
           className="mt-10 flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4"
         >
           <Button>Request a demo</Button>
-          {/* <Button variant="outline">View Documentation</Button> */}
         </motion.div>
       </section>
 
-      {/* WHY CHOOSE US */}
-
       <WhyChooseUs />
-
-      {/* HOW IT WORKS */}
-
       <HowItWorks />
-
-      {/* SUPPORTED FORMATS - Custom Horizontal Layout */}
       <FormatAd />
 
       {/* DASHBOARD PREVIEW */}
@@ -227,7 +224,7 @@ export default function App() {
             <div className="w-full h-96 bg-gray-800/50 border border-gray-700 rounded-3xl shadow-inner overflow-hidden">
               <img
                 src="https://panel.digitarmedia.com/admin/uploads/sdk1753085789.png"
-                className="w-full h-full object-contain p-4 rounded-"
+                className="w-full h-full object-contain p-4"
                 alt="SDK Dashboard Preview"
                 loading="lazy"
               />
@@ -290,61 +287,7 @@ export default function App() {
         </div>
       </section>
 
-    
-      {/* FAQ */}
-      <section className="py-28 px-4 sm:px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
-          Frequently Asked Questions
-        </h2>
-        <div className="max-w-3xl mx-auto space-y-6">
-          {[
-            {
-              q: "How long does integration take?",
-              a: "Most developers integrate adpocket.ai in under 30 minutes with our lightweight SDK.",
-            },
-            {
-              q: "Is there any revenue share?",
-              a: "We work on a transparent revenue share model. No hidden fees.",
-            },
-            {
-              q: "Which ad networks do you support?",
-              a: "We partner with over 30 top-tier networks including Google, Meta, and AppLovin.",
-            },
-            {
-              q: "Is my user data safe?",
-              a: "Absolutely. We are fully GDPR and CCPA compliant with strict data policies.",
-            },
-          ].map((f, i) => (
-            <div
-              key={i}
-              className="border border-gray-700 rounded-2xl bg-gray-800/50 backdrop-blur shadow-md"
-            >
-              <button
-                onClick={() => setOpen(open === i ? null : i)}
-                className="w-full text-left px-6 py-4 font-semibold text-lg flex justify-between text-white hover:bg-gray-800/70 transition-colors duration-200 rounded-2xl"
-              >
-                {f.q}
-                <span className="font-bold text-xl text-gray-400">
-                  {open === i ? "−" : "+"}
-                </span>
-              </button>
-              <AnimatePresence>
-                {open === i && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="px-6 pb-4 text-gray-300 overflow-hidden"
-                  >
-                    {f.a}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
-        </div>
-      </section>
+      <FAQSection />
 
       {/* CTA */}
       <section
@@ -369,13 +312,12 @@ export default function App() {
           ads and unbeatable performance.
         </motion.p>
         <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
-          <Button variant="white">Download SDK</Button>
-          <Button
-            variant="outline"
-            className="border-white text-white hover:bg-white hover:text-indigo-600"
+          <button
+            onClick={() => setIsContactModalOpen(true)}
+            className="bg-white text-indigo-600 px-6 py-3 rounded-xl hover:scale-105 transition-all duration-300 font-semibold"
           >
             Contact Us
-          </Button>
+          </button>
         </div>
       </section>
 
@@ -409,6 +351,12 @@ export default function App() {
         </div>
         <p>© 2025 adpocket.ai</p>
       </footer>
+
+      {/* Contact Modal */}
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </div>
   );
 }
