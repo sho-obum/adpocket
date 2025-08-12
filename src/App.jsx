@@ -32,7 +32,7 @@ const Button = ({
 };
 const PoweredBy = () => (
   <div className="flex items-center justify-end gap-2 text-xs sm:text-sm text-gray-400 mt-1">
-    <span className=" tracking-wide text-[0.7rem] ms-5">powered by</span>
+    <span className=" tracking-wide text-[0.7rem] ms-[15px]">powered by</span>
     <div
       className=" w-[12rem] flex items-center justify-center -ml-2"
       aria-label="Powered by logo placeholder"
