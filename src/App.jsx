@@ -30,7 +30,18 @@ const Button = ({
     </button>
   );
 };
-
+const PoweredBy = () => (
+  <div className="flex items-center justify-end gap-2 text-xs sm:text-sm text-gray-400 mt-1">
+    <span className=" tracking-wide text-[0.7rem] ms-5">powered by</span>
+    <div
+      className=" w-[12rem] flex items-center justify-center -ml-2"
+      aria-label="Powered by logo placeholder"
+      title="Powered by logo"
+    >
+    <img src="https://panel.digitarmedia.com/admin/uploads/digitar_logo1754992858.png" alt=""  />
+    </div>
+  </div>
+);
 // Careers Modal
 const CareersModal = ({ isOpen, onClose }) => {
   const jobOpenings = [
@@ -152,9 +163,6 @@ const CareersModal = ({ isOpen, onClose }) => {
   );
 };
 
-// REMOVED THE PROBLEMATIC LINE THAT WAS HERE:
-// <PrivacyModal isOpen={isPrivacyModalOpen} onClose={() => setIsPrivacyModalOpen(false)} />;
-
 const Navbar = ({ onContactOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -176,14 +184,15 @@ const Navbar = ({ onContactOpen }) => {
 
   return (
     <>
-      <nav className="fixed top-0 w-full bg-black/90 backdrop-blur-md border-b border-gray-800 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+      <nav className="fixed top-0 w-full bg-black/90 backdrop-blur-md border-b border-gray-800 z-50 ">
+        <div className="max-w-7xl mx-auto px-4 py-2 pb-5 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16 ">
             {/* Logo */}
-            <div className="flex-shrink-0">
-              <span className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-transparent">
+            <div className="flex-shrink-0 leading-none">
+              <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-transparent select-none">
                 Adpocket.ai
-              </span>
+              </div>
+              <PoweredBy />
             </div>
 
             {/* Desktop Menu */}
